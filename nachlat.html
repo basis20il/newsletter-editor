@@ -14,23 +14,26 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 /* ── LOCK SCREEN ── */
 #lockScreen{
   position:fixed;inset:0;z-index:9999;
-  background:linear-gradient(135deg,#111827 0%,#1e2d40 60%,#111827 100%);
-  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0a1628 0%,#1e3a6e 60%,#0a1628 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
   font-family:'Heebo',sans-serif;direction:rtl;
 }
 .lock-box{
-  background:#fff;border-radius:12px;padding:40px 44px;width:340px;
-  box-shadow:0 24px 80px rgba(0,0,0,0.5);text-align:center;
+  background:#fff;border-radius:16px;padding:44px 48px 36px;width:380px;
+  box-shadow:0 32px 100px rgba(0,0,0,0.55);text-align:center;
 }
-.lock-icon{font-size:38px;margin-bottom:12px;display:block}
+.lock-logo-area{margin-bottom:16px}
+.lock-logo-area img{width:90px;height:90px;object-fit:contain;border-radius:8px}
+.lock-logo-placeholder{font-size:52px;line-height:1;display:block;margin-bottom:4px}
 .lock-box h2{
-  font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:900;
-  color:#111827;margin-bottom:4px;
+  font-family:'Noto Serif Hebrew','Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
+  color:#111827;margin-bottom:3px;
 }
-.lock-box p{font-size:13px;color:#888;margin-bottom:24px}
+.lock-box .lock-sub{font-family:'Noto Serif Hebrew',Georgia,serif;font-size:15px;font-weight:700;color:#1e3a6e;margin-bottom:2px}
+.lock-box .lock-rav{font-family:'Noto Serif Hebrew',Georgia,serif;font-size:14px;font-weight:600;color:#444;margin-bottom:24px}
 .lock-input{
-  width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:6px;
-  font-family:'Heebo',sans-serif;font-size:16px;text-align:center;letter-spacing:3px;
+  width:100%;padding:13px 14px;border:2px solid var(--border);border-radius:8px;
+  font-family:'Heebo',sans-serif;font-size:18px;text-align:center;letter-spacing:4px;
   direction:ltr;outline:none;transition:border-color 0.2s;margin-bottom:14px;
   background:#fafafa;
 }
@@ -38,13 +41,14 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 .lock-input.error-shake{animation:shake 0.35s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 .lock-btn{
-  width:100%;padding:12px;background:#111827;color:var(--gold);border:none;
-  border-radius:6px;font-family:'Heebo',sans-serif;font-size:15px;font-weight:700;
+  width:100%;padding:13px;background:#1e3a6e;color:#fff;border:none;
+  border-radius:8px;font-family:'Heebo',sans-serif;font-size:15px;font-weight:700;
   cursor:pointer;letter-spacing:0.5px;transition:opacity 0.2s;
 }
 .lock-btn:hover{opacity:0.85}
 .lock-err{color:#c0392b;font-size:12px;margin-top:10px;min-height:18px;font-weight:600}
 .lock-attempts{color:#aaa;font-size:11px;margin-top:6px;min-height:16px}
+.lock-credit{margin-top:22px;font-family:'Heebo',sans-serif;font-size:11px;color:rgba(255,255,255,0.35);text-align:center;letter-spacing:0.3px}
 
 .app{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:100vh}
 .sidebar{background:#fff;border-left:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column}
@@ -128,7 +132,8 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 .list-row .rm:hover{border-color:#c00;color:#c00}
 
 /* GENERATE */
-.gen-wrap{padding:14px 18px;position:sticky;bottom:0;background:#fff;border-top:2px solid var(--gold);z-index:10}
+.gen-wrap{padding:14px 18px 10px;position:sticky;bottom:0;background:#fff;border-top:2px solid var(--gold);z-index:10}
+.gen-credit{text-align:center;font-size:10px;color:#bbb;margin-top:8px;font-family:'Heebo',sans-serif}
 .pending-warn{background:#fff3cd;border:1px solid #ffc107;border-radius:4px;padding:6px 10px;font-size:11px;color:#856404;margin-bottom:7px;display:none}
 .pending-warn.show{display:block}
 .btn-gen{background:#111827;color:var(--gold);border:none;padding:12px;border-radius:4px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;width:100%;letter-spacing:0.5px;transition:opacity 0.2s}
@@ -169,15 +174,20 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 <!-- ═══ LOCK SCREEN ═══ -->
 <div id="lockScreen">
   <div class="lock-box">
-    <span class="lock-icon">🔐</span>
+    <div class="lock-logo-area">
+      <img id="lockLogoImg" src="" alt="לוגו" style="display:none" />
+      <span class="lock-logo-placeholder" id="lockLogoEmoji">🏛</span>
+    </div>
     <h2>בונה ניוזלטר</h2>
-    <p>נחלת יוסף — כניסה לעורכים בלבד</p>
+    <div class="lock-sub">מוסדות נחלת יוסף</div>
+    <div class="lock-rav">בראשות הגאון הרב יואל חברוני שליט"א</div>
     <input type="password" class="lock-input" id="lockInput" placeholder="••••••••" maxlength="30"
       onkeydown="if(event.key==='Enter')unlock()" autocomplete="current-password" />
-    <button class="lock-btn" onclick="unlock()">כניסה ✦</button>
+    <button class="lock-btn" onclick="unlock()">כניסה</button>
     <div class="lock-err" id="lockErr"></div>
     <div class="lock-attempts" id="lockAttempts"></div>
   </div>
+  <div class="lock-credit">קידוד ופיתוח: צח פתרונות&nbsp;&nbsp;|&nbsp;&nbsp;0555-615243</div>
 </div>
 
 <div class="app" id="mainApp" style="display:none">
@@ -185,7 +195,8 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 <!-- ═══ SIDEBAR ═══ -->
 <aside class="sidebar">
   <div class="sidebar-header">
-    <h1>בונה ניוזלטר ✦ v4 — נחלת יוסף</h1>
+    <h1>בונה ניוזלטר ✦ v5 — נחלת יוסף</h1>
+    <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:8px;font-family:'Heebo',sans-serif">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
     <div class="nl-tabs" id="nlTabs">
       <button class="nl-tab active" onclick="switchNL(1)">היכל ההוראה</button>
       <button class="nl-tab" onclick="switchNL(2)">רוממות — חינוך</button>
@@ -256,6 +267,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
     <div class="gen-wrap">
       <div class="pending-warn" id="n1_pendingWarn">⏳ ממתין לסיום העלאת תמונות...</div>
       <button class="btn-gen" id="n1_genBtn" onclick="generate(1)">✦ צור ניוזלטר — היכל ההוראה</button>
+      <div class="gen-credit">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
     </div>
   </div>
 
@@ -316,6 +328,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
     <div class="gen-wrap">
       <div class="pending-warn" id="n2_pendingWarn">⏳ ממתין לסיום העלאת תמונות...</div>
       <button class="btn-gen" id="n2_genBtn" onclick="generate(2)">✦ צור ניוזלטר — רוממות</button>
+      <div class="gen-credit">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
     </div>
   </div>
 
@@ -362,6 +375,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
     <div class="gen-wrap">
       <div class="pending-warn" id="n3_pendingWarn">⏳ ממתין לסיום העלאת תמונות...</div>
       <button class="btn-gen" id="n3_genBtn" onclick="generate(3)">✦ צור ניוזלטר — קול אחיי</button>
+      <div class="gen-credit">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
     </div>
   </div>
 
@@ -388,9 +402,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 
 <script>
 /* ─── LOCK SCREEN ────────────────────────────── */
-const CORRECT_HASH = 'ec4c88ca7f69534f10c0611c1ecd13e7c2cdf73e1b915e9fd0cf27ac10da43fa'; // SHA-256 of "password"
-// To change the password, update CORRECT_HASH with SHA-256 of your new password.
-// You can generate a SHA-256 hash at: https://emn178.github.io/online-tools/sha256.html
+const CORRECT_HASH = 'ec4c88ca7f69534f10c0611c1ecd13e7c2cdf73e1b915e9fd0cf27ac10da43fa';
 
 let lockAttempts = 0;
 const MAX_ATTEMPTS = 5;
@@ -689,7 +701,7 @@ function buildListHtml(items,title,ac){
     <div style="font-family:'Inter','Heebo',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:${ac};text-transform:uppercase;margin-bottom:14px">${escH(title)}</div>
     <table width="100%" cellpadding="0" cellspacing="0" border="0">${rows}</table></div>`;
 }
-function buildUnsub(){return`<div style="text-align:center;padding:10px 0;font-size:11px;color:rgba(255,255,255,0.4);font-family:'Inter','Heebo',sans-serif"><a href="*|UNSUB|*" style="color:rgba(255,255,255,0.4);text-decoration:underline">הסר אותי מרשימה זו</a><br><span style="font-size:10px">*|REWARDS|*</span></div>`;}
+function buildUnsub(){return`<div style="text-align:center;padding:12px 0;font-family:'Inter','Heebo',sans-serif"><a href="https://basis20il.github.io/newsletter-editor/*%7CUNSUB%7C*" style="color:rgba(255,255,255,0.7);text-decoration:underline;font-size:12px;font-weight:500">הסר אותי מרשימת התפוצה</a><br><span style="font-size:10px;color:rgba(255,255,255,0.25)">*|REWARDS|*</span></div>`;}
 
 /* ─── GENERATE ───────────────────────────────── */
 function generate(nlNum){
@@ -750,6 +762,7 @@ ${NL_FONTS}
     <div style="font-family:'Inter','Heebo',sans-serif;color:rgba(160,195,255,0.55);font-size:10px;letter-spacing:2px;margin-bottom:16px;font-weight:500">${escH(v('n1_foot2'))}</div>
     <div style="width:40px;height:1px;background:rgba(255,255,255,0.15);margin:0 auto 16px"></div>
     ${buildUnsub()}
+    <div style="margin-top:10px;font-family:'Inter','Heebo',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.5px">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
   </td></tr>
 
 </table></td></tr></table></body></html>`;
@@ -819,6 +832,7 @@ ${NL_FONTS}
     <div style="font-family:'Inter','Heebo',sans-serif;color:rgba(255,220,140,0.5);font-size:10px;letter-spacing:2px;margin-bottom:16px;font-weight:500">${escH(v('n2_foot2'))}</div>
     <div style="width:40px;height:1px;background:rgba(255,255,255,0.15);margin:0 auto 16px"></div>
     ${buildUnsub()}
+    <div style="margin-top:10px;font-family:'Inter','Heebo',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.5px">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
   </td></tr>
 
   <!-- BOTTOM ACCENT -->
@@ -899,6 +913,7 @@ ${NL_FONTS}
     <div style="font-family:'Inter','Heebo',sans-serif;color:rgba(255,255,255,0.3);font-size:10px;letter-spacing:2px;margin-bottom:16px">${escH(v('n3_foot2'))}</div>
     <div style="width:40px;height:1px;background:rgba(255,255,255,0.12);margin:0 auto 14px"></div>
     ${buildUnsub()}
+    <div style="margin-top:10px;font-family:'Inter','Heebo',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.5px">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
   </td></tr>
 
 </table></td></tr></table></body></html>`;
