@@ -3,9 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>בונה ניוזלטר v4 — נחלת יוסף</title>
+<title>בונה ניוזלטר v5 — נחלת יוסף</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+Hebrew:wght@400;600;700;900&family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDZPg8JbmBDduJNJ30HdvRIPIyqSe1Twns",
+    authDomain: "sendnew-8cb54.firebaseapp.com",
+    projectId: "sendnew-8cb54",
+    storageBucket: "sendnew-8cb54.firebasestorage.app",
+    messagingSenderId: "306001680922",
+    appId: "1:306001680922:web:66a0c42be6fbbaff4a0fa3"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window._fbSaveNewsletter = async function(name, html) {
+    const docRef = await addDoc(collection(db, "newsletters"), {
+      name: name,
+      html: html,
+      createdAt: serverTimestamp(),
+      status: "pending"
+    });
+    return docRef.id;
+  };
+</script>
 <style>
 :root { --gold:#c9952a; --ink:#1a1a1a; --border:#e8e0d0; --muted:#999; --sidebar-w:430px; }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -23,28 +50,15 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
   box-shadow:0 32px 100px rgba(0,0,0,0.55);text-align:center;
 }
 .lock-logo-area{margin-bottom:16px}
-.lock-logo-area img{width:90px;height:90px;object-fit:contain;border-radius:8px}
 .lock-logo-placeholder{font-size:52px;line-height:1;display:block;margin-bottom:4px}
-.lock-box h2{
-  font-family:'Noto Serif Hebrew','Frank Ruhl Libre',serif;font-size:26px;font-weight:900;
-  color:#111827;margin-bottom:3px;
-}
+.lock-box h2{font-family:'Noto Serif Hebrew','Frank Ruhl Libre',serif;font-size:26px;font-weight:900;color:#111827;margin-bottom:3px}
 .lock-box .lock-sub{font-family:'Noto Serif Hebrew',Georgia,serif;font-size:15px;font-weight:700;color:#1e3a6e;margin-bottom:2px}
 .lock-box .lock-rav{font-family:'Noto Serif Hebrew',Georgia,serif;font-size:14px;font-weight:600;color:#444;margin-bottom:24px}
-.lock-input{
-  width:100%;padding:13px 14px;border:2px solid var(--border);border-radius:8px;
-  font-family:'Heebo',sans-serif;font-size:18px;text-align:center;letter-spacing:4px;
-  direction:ltr;outline:none;transition:border-color 0.2s;margin-bottom:14px;
-  background:#fafafa;
-}
+.lock-input{width:100%;padding:13px 14px;border:2px solid var(--border);border-radius:8px;font-family:'Heebo',sans-serif;font-size:18px;text-align:center;letter-spacing:4px;direction:ltr;outline:none;transition:border-color 0.2s;margin-bottom:14px;background:#fafafa}
 .lock-input:focus{border-color:var(--gold);background:#fff}
 .lock-input.error-shake{animation:shake 0.35s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-.lock-btn{
-  width:100%;padding:13px;background:#1e3a6e;color:#fff;border:none;
-  border-radius:8px;font-family:'Heebo',sans-serif;font-size:15px;font-weight:700;
-  cursor:pointer;letter-spacing:0.5px;transition:opacity 0.2s;
-}
+.lock-btn{width:100%;padding:13px;background:#1e3a6e;color:#fff;border:none;border-radius:8px;font-family:'Heebo',sans-serif;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.2s}
 .lock-btn:hover{opacity:0.85}
 .lock-err{color:#c0392b;font-size:12px;margin-top:10px;min-height:18px;font-weight:600}
 .lock-attempts{color:#aaa;font-size:11px;margin-top:6px;min-height:16px}
@@ -74,10 +88,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 /* FIELDS */
 .field{margin-bottom:9px}
 .field label{display:block;font-size:11px;color:#666;margin-bottom:3px;font-weight:500}
-.field input[type=text],.field input[type=url],.field textarea,.field select{
-  width:100%;padding:7px 9px;border:1px solid var(--border);border-radius:4px;
-  font-family:'Heebo',sans-serif;font-size:13px;color:var(--ink);direction:rtl;
-  background:#fafafa;outline:none;transition:border-color 0.2s}
+.field input[type=text],.field input[type=url],.field textarea,.field select{width:100%;padding:7px 9px;border:1px solid var(--border);border-radius:4px;font-family:'Heebo',sans-serif;font-size:13px;color:var(--ink);direction:rtl;background:#fafafa;outline:none;transition:border-color 0.2s}
 .field input:focus,.field textarea:focus{border-color:var(--gold);background:#fff}
 .field textarea{resize:vertical;min-height:70px;line-height:1.6}
 .mt4{margin-top:4px}
@@ -136,9 +147,23 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 .gen-credit{text-align:center;font-size:10px;color:#bbb;margin-top:8px;font-family:'Heebo',sans-serif}
 .pending-warn{background:#fff3cd;border:1px solid #ffc107;border-radius:4px;padding:6px 10px;font-size:11px;color:#856404;margin-bottom:7px;display:none}
 .pending-warn.show{display:block}
-.btn-gen{background:#111827;color:var(--gold);border:none;padding:12px;border-radius:4px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;width:100%;letter-spacing:0.5px;transition:opacity 0.2s}
+.btn-gen{background:#111827;color:var(--gold);border:none;padding:12px;border-radius:4px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;width:100%;letter-spacing:0.5px;transition:opacity 0.2s;margin-bottom:8px}
 .btn-gen:hover{opacity:0.85}
 .btn-gen:disabled{opacity:0.4;cursor:not-allowed}
+
+/* SUBMIT BUTTON — prominent green */
+.btn-submit{
+  background:linear-gradient(135deg,#1a7a40 0%,#2ecc71 100%);
+  color:#fff;border:none;padding:14px;border-radius:6px;
+  font-family:'Heebo',sans-serif;font-size:15px;font-weight:800;
+  cursor:pointer;width:100%;letter-spacing:0.5px;
+  transition:all 0.2s;display:none;
+  box-shadow:0 4px 18px rgba(26,122,64,0.35);
+  margin-bottom:6px;
+}
+.btn-submit:hover{opacity:0.88;transform:translateY(-1px)}
+.btn-submit:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.btn-submit.show{display:block}
 
 /* PREVIEW */
 .preview-bar{background:#fff;border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:5}
@@ -147,21 +172,18 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 .btn-dl:hover{opacity:0.85}
 .btn-dl.show{display:inline-block}
 
-/* SEND BUTTON */
-.btn-send{margin-right:8px;background:#1a7a40;color:#fff;border:none;padding:7px 16px;border-radius:4px;font-family:'Heebo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:none;transition:all 0.2s;gap:5px;align-items:center}
-.btn-send:hover{background:#155e32}
-.btn-send.show{display:inline-flex}
-.btn-send:disabled{opacity:0.5;cursor:not-allowed}
-
-/* SEND TOAST */
+/* TOAST */
 #sendToast{
   position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:#111827;color:#fff;padding:12px 22px;border-radius:8px;
-  font-size:13px;font-weight:600;opacity:0;pointer-events:none;
+  background:#111827;color:#fff;padding:14px 26px;border-radius:10px;
+  font-size:14px;font-weight:700;opacity:0;pointer-events:none;
   transition:all 0.35s;z-index:9998;white-space:nowrap;
   box-shadow:0 4px 20px rgba(0,0,0,0.35);
 }
 #sendToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#sendToast.success{background:linear-gradient(135deg,#1a7a40,#27ae60)}
+#sendToast.error{background:linear-gradient(135deg,#c0392b,#e74c3c)}
+
 .preview-wrap{flex:1;padding:24px;display:flex;justify-content:center;overflow-y:auto}
 .preview-wrap iframe{width:650px;max-width:100%;min-height:600px;border:none;border-radius:4px;box-shadow:0 8px 40px rgba(0,0,0,0.18);background:#fff}
 .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#bbb;text-align:center}
@@ -175,8 +197,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 <div id="lockScreen">
   <div class="lock-box">
     <div class="lock-logo-area">
-      <img id="lockLogoImg" src="" alt="לוגו" style="display:none" />
-      <span class="lock-logo-placeholder" id="lockLogoEmoji">🏛</span>
+      <span class="lock-logo-placeholder">🏛</span>
     </div>
     <h2>בונה ניוזלטר</h2>
     <div class="lock-sub">מוסדות נחלת יוסף</div>
@@ -204,7 +225,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
     </div>
   </div>
 
-  <!-- ══════════ NL 1: היכל ההוראה ══════════ -->
+  <!-- ══════════ NL 1 ══════════ -->
   <div class="nl-panel active" id="nlPanel1" data-nl="1">
     <div class="panel">
       <div class="panel-title">כותרת</div>
@@ -216,29 +237,25 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
         <div class="upload-zone" id="n1_logoZone"><input type="file" id="n1_li" accept="image/*" onchange="handleLogo(this,'n1')" /><div class="icon">🏛</div><p>לחץ להעלאת לוגו</p></div>
         <div id="n1_logoStatus"></div><img id="n1_logoPreview" class="logo-preview" style="display:none" /></div>
     </div>
-
     <div class="panel">
       <div class="panel-title">נושאים</div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">אקטואליה בפרשה — הגיגי השקפה ומחשבה בניחוח אקטואלי לזמננו</span></div><div id="n1_sections_hashkafa"></div><button class="add-btn-sm" onclick="addSection('n1','hashkafa')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">בעין הסערה — סוגיות טעונות מחיי היום יום וניתובם עפ"י התורה</span></div><div id="n1_sections_beayin"></div><button class="add-btn-sm" onclick="addSection('n1','beayin')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">הלכה והנהגה — מכותלי בית ההוראה</span></div><div id="n1_sections_halacha"></div><button class="add-btn-sm" onclick="addSection('n1','halacha')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">רפואה בהלכה — פנינים ופסקים מבית ההוראה</span></div><div id="n1_sections_refuah"></div><button class="add-btn-sm" onclick="addSection('n1','refuah')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">לזכרון עולם — דמותם של רבותנו המהווים אור בדרכנו</span></div><div id="n1_sections_zikaron"></div><button class="add-btn-sm" onclick="addSection('n1','zikaron')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">אקטואליה בפרשה</span></div><div id="n1_sections_hashkafa"></div><button class="add-btn-sm" onclick="addSection('n1','hashkafa')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">בעין הסערה</span></div><div id="n1_sections_beayin"></div><button class="add-btn-sm" onclick="addSection('n1','beayin')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">הלכה והנהגה</span></div><div id="n1_sections_halacha"></div><button class="add-btn-sm" onclick="addSection('n1','halacha')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">רפואה בהלכה</span></div><div id="n1_sections_refuah"></div><button class="add-btn-sm" onclick="addSection('n1','refuah')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">לזכרון עולם</span></div><div id="n1_sections_zikaron"></div><button class="add-btn-sm" onclick="addSection('n1','zikaron')">+ הוסף סעיף</button></div>
     </div>
-
     <div class="panel">
       <div class="panel-title">תמונות</div>
       <div class="upload-zone"><input type="file" id="n1_gi" accept="image/*" multiple onchange="handleGallery(this,'n1')" /><div class="icon">🖼</div><p>לחץ להעלאת תמונות (עד 6)</p></div>
       <div class="thumbs" id="n1_galleryThumbs"></div>
       <div class="field mt4"><label>כיתוב לתמונות</label><input type="text" id="n1_galleryCaption" placeholder="כיתוב..." /></div>
     </div>
-
     <div class="panel">
       <div class="panel-title">סרטון</div>
       <div class="field"><label>קישור YouTube</label><input type="text" id="n1_videoUrl" placeholder="https://youtube.com/watch?v=..." /></div>
       <div class="field"><label>כותרת</label><input type="text" id="n1_videoTitle" value="שיעור השבוע" /></div>
     </div>
-
     <div class="panel">
       <div class="panel-title">סוף הניוזלטר</div>
       <div class="field"><label>קישור לניוזלטר אחר — טקסט</label><input type="text" id="n1_crossText" value="לקבלת ניוזלטר בנושאי חינוך, יעוץ, שידוכין והעשרה בשלמות המשפחה — הקש כאן" /></div>
@@ -253,25 +270,20 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
         <div id="n1_lessonsList" style="margin-top:6px"></div>
         <button class="add-btn-sm" onclick="addListItem('n1','lessons')">+ הוסף שיעור</button>
       </div>
-      <div class="field"><label>פרסומים</label>
-        <div id="n1_adsList"></div>
-        <button class="add-btn-sm" onclick="addListItem('n1','ads')">+ הוסף פרסום</button>
-      </div>
-      <div class="field"><label>קורסים</label>
-        <div id="n1_coursesList"></div>
-        <button class="add-btn-sm" onclick="addListItem('n1','courses')">+ הוסף קורס</button>
-      </div>
+      <div class="field"><label>פרסומים</label><div id="n1_adsList"></div><button class="add-btn-sm" onclick="addListItem('n1','ads')">+ הוסף פרסום</button></div>
+      <div class="field"><label>קורסים</label><div id="n1_coursesList"></div><button class="add-btn-sm" onclick="addListItem('n1','courses')">+ הוסף קורס</button></div>
       <div class="field mt4"><label>כותרת תחתית — שורה 1</label><input type="text" id="n1_foot1" value="היכל ההוראה — בית הוראה ומוסדות נחלת יוסף" /></div>
       <div class="field"><label>כותרת תחתית — שורה 2</label><input type="text" id="n1_foot2" value='גליון שבועי ✦ אייר תשפ"ה' /></div>
     </div>
     <div class="gen-wrap">
       <div class="pending-warn" id="n1_pendingWarn">⏳ ממתין לסיום העלאת תמונות...</div>
-      <button class="btn-gen" id="n1_genBtn" onclick="generate(1)">✦ צור ניוזלטר — היכל ההוראה</button>
+      <button class="btn-gen" id="n1_genBtn" onclick="generate(1)">✦ צור תצוגה מקדימה</button>
+      <button class="btn-submit show" id="n1_submitBtn" onclick="submitNewsletter(1)" style="display:none">✅ סיימתי — שלח לעריכה</button>
       <div class="gen-credit">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
     </div>
   </div>
 
-  <!-- ══════════ NL 2: חינוך ושלום בית ══════════ -->
+  <!-- ══════════ NL 2 ══════════ -->
   <div class="nl-panel" id="nlPanel2" data-nl="2">
     <div class="panel">
       <div class="panel-title">כותרת</div>
@@ -283,29 +295,25 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
         <div class="upload-zone" id="n2_logoZone"><input type="file" id="n2_li" accept="image/*" onchange="handleLogo(this,'n2')" /><div class="icon">🏠</div><p>לחץ להעלאת לוגו</p></div>
         <div id="n2_logoStatus"></div><img id="n2_logoPreview" class="logo-preview" style="display:none" /></div>
     </div>
-
     <div class="panel">
       <div class="panel-title">נושאים</div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">חינוך — טיפים ועצות בנושאי חינוך ויעוץ והנחיית הורים</span></div><div id="n2_sections_chinuch"></div><button class="add-btn-sm" onclick="addSection('n2','chinuch')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">מחוברים — טעימות מחיי זוגיות תקינה</span></div><div id="n2_sections_shalom"></div><button class="add-btn-sm" onclick="addSection('n2','shalom')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">ממעמקים — אוצרות של אימון והעצמה בענייני הנפש</span></div><div id="n2_sections_nefesh"></div><button class="add-btn-sm" onclick="addSection('n2','nefesh')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">אושר החיים — מעיינות של אור בענייני שידוכין</span></div><div id="n2_sections_shiduchim"></div><button class="add-btn-sm" onclick="addSection('n2','shiduchim')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">חינוך</span></div><div id="n2_sections_chinuch"></div><button class="add-btn-sm" onclick="addSection('n2','chinuch')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">מחוברים</span></div><div id="n2_sections_shalom"></div><button class="add-btn-sm" onclick="addSection('n2','shalom')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">ממעמקים</span></div><div id="n2_sections_nefesh"></div><button class="add-btn-sm" onclick="addSection('n2','nefesh')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">אושר החיים</span></div><div id="n2_sections_shiduchim"></div><button class="add-btn-sm" onclick="addSection('n2','shiduchim')">+ הוסף סעיף</button></div>
       <div class="topic-block"><div class="tb-head"><span class="tb-label">מתעדכנים</span></div><div id="n2_sections_meituadkenim"></div><button class="add-btn-sm" onclick="addSection('n2','meituadkenim')">+ הוסף סעיף</button></div>
     </div>
-
     <div class="panel">
       <div class="panel-title">תמונות</div>
       <div class="upload-zone"><input type="file" id="n2_gi" accept="image/*" multiple onchange="handleGallery(this,'n2')" /><div class="icon">🖼</div><p>לחץ להעלאת תמונות (עד 6)</p></div>
       <div class="thumbs" id="n2_galleryThumbs"></div>
       <div class="field mt4"><label>כיתוב</label><input type="text" id="n2_galleryCaption" placeholder="כיתוב..." /></div>
     </div>
-
     <div class="panel">
       <div class="panel-title">סרטון</div>
       <div class="field"><label>קישור YouTube</label><input type="text" id="n2_videoUrl" placeholder="https://youtube.com/watch?v=..." /></div>
       <div class="field"><label>כותרת</label><input type="text" id="n2_videoTitle" value="שיעור השבוע" /></div>
     </div>
-
     <div class="panel">
       <div class="panel-title">סוף הניוזלטר</div>
       <div class="field"><label>קישור לניוזלטר אחר — טקסט</label><input type="text" id="n2_crossText" value="לקבלת ניוזלטר בענייני הלכה והנהגה, רפואה בהלכה, השקפה ומחשבה, הקש כאן" /></div>
@@ -327,12 +335,13 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
     </div>
     <div class="gen-wrap">
       <div class="pending-warn" id="n2_pendingWarn">⏳ ממתין לסיום העלאת תמונות...</div>
-      <button class="btn-gen" id="n2_genBtn" onclick="generate(2)">✦ צור ניוזלטר — רוממות</button>
+      <button class="btn-gen" id="n2_genBtn" onclick="generate(2)">✦ צור תצוגה מקדימה</button>
+      <button class="btn-submit" id="n2_submitBtn" onclick="submitNewsletter(2)" style="display:none">✅ סיימתי — שלח לעריכה</button>
       <div class="gen-credit">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
     </div>
   </div>
 
-  <!-- ══════════ NL 3: קול אחיי ══════════ -->
+  <!-- ══════════ NL 3 ══════════ -->
   <div class="nl-panel" id="nlPanel3" data-nl="3">
     <div class="panel">
       <div class="panel-title">כותרת</div>
@@ -344,28 +353,24 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
         <div class="upload-zone" id="n3_logoZone"><input type="file" id="n3_li" accept="image/*" onchange="handleLogo(this,'n3')" /><div class="icon">🌟</div><p>לחץ להעלאת לוגו</p></div>
         <div id="n3_logoStatus"></div><img id="n3_logoPreview" class="logo-preview" style="display:none" /></div>
     </div>
-
     <div class="panel">
       <div class="panel-title">דבר תורה</div>
       <div id="n3_sections_dvar"></div>
       <button class="add-btn" onclick="addSection('n3','dvar')">+ הוסף סעיף</button>
     </div>
-
     <div class="panel">
       <div class="panel-title">מהנעשה — תמונות וכיתובים</div>
       <div id="n3_captionedPhotos"></div>
       <button class="add-btn" onclick="addCaptionedPhoto()">+ הוסף תמונה וכיתוב</button>
     </div>
-
     <div class="panel">
       <div class="panel-title">סרטון</div>
       <div class="field"><label>קישור YouTube</label><input type="text" id="n3_videoUrl" placeholder="https://youtube.com/watch?v=..." /></div>
       <div class="field"><label>כותרת</label><input type="text" id="n3_videoTitle" value="שיעור השבוע" /></div>
     </div>
-
     <div class="panel">
       <div class="panel-title">סוף הניוזלטר</div>
-      <div class="field"><label>קישור לניוזלטר אחר — טקסט</label><input type="text" id="n3_crossText" value="לקבלת הניולזטר בענייני חינוך ושלום בית לחצו כאן" /></div>
+      <div class="field"><label>קישור לניוזלטר אחר — טקסט</label><input type="text" id="n3_crossText" value="לקבלת הניוזלטר בענייני חינוך ושלום בית לחצו כאן" /></div>
       <div class="field"><label>קישור לניוזלטר אחר — URL</label><input type="url" id="n3_crossUrl" placeholder="https://..." /></div>
       <div class="field"><label>טקסט כפתור תרומות</label><input type="text" id="n3_donateText" value="תרומות לפעילות קול אחיי — נחלת יוסף" /></div>
       <div class="field"><label>קישור תרומות</label><input type="url" id="n3_donateUrl" placeholder="https://..." /></div>
@@ -374,7 +379,8 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
     </div>
     <div class="gen-wrap">
       <div class="pending-warn" id="n3_pendingWarn">⏳ ממתין לסיום העלאת תמונות...</div>
-      <button class="btn-gen" id="n3_genBtn" onclick="generate(3)">✦ צור ניוזלטר — קול אחיי</button>
+      <button class="btn-gen" id="n3_genBtn" onclick="generate(3)">✦ צור תצוגה מקדימה</button>
+      <button class="btn-submit" id="n3_submitBtn" onclick="submitNewsletter(3)" style="display:none">✅ סיימתי — שלח לעריכה</button>
       <div class="gen-credit">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
     </div>
   </div>
@@ -385,7 +391,6 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 <main class="preview">
   <div class="preview-bar">
     <span id="previewLabel">תצוגה מקדימה</span>
-    <button class="btn-send" id="sendBtn" onclick="sendByEmail()">📧 שלח לעריכה</button>
     <button class="btn-dl" id="dlBtn" onclick="download()">⬇ הורד HTML</button>
   </div>
   <div class="preview-wrap" id="previewWrap">
@@ -396,30 +401,25 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
     <iframe id="pif" style="display:none"></iframe>
   </div>
 </main>
-</div><!-- /mainApp -->
+</div>
 
 <div id="sendToast"></div>
 
 <script>
-/* ─── LOCK SCREEN ────────────────────────────── */
+/* ─── LOCK ─── */
 const CORRECT_HASH = 'ec4c88ca7f69534f10c0611c1ecd13e7c2cdf73e1b915e9fd0cf27ac10da43fa';
-
-let lockAttempts = 0;
-const MAX_ATTEMPTS = 5;
-let lockTimeout = null;
+let lockAttempts = 0, lockTimeout = null;
 
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
-
 async function unlock() {
   if (lockTimeout) return;
   const input = document.getElementById('lockInput');
   const errEl = document.getElementById('lockErr');
   const attEl = document.getElementById('lockAttempts');
   const hash = await sha256(input.value);
-
   if (hash === CORRECT_HASH) {
     document.getElementById('lockScreen').style.display = 'none';
     document.getElementById('mainApp').style.display = 'grid';
@@ -428,20 +428,11 @@ async function unlock() {
     input.value = '';
     input.classList.add('error-shake');
     setTimeout(() => input.classList.remove('error-shake'), 400);
-
-    const left = MAX_ATTEMPTS - lockAttempts;
+    const left = 5 - lockAttempts;
     if (left <= 0) {
       errEl.textContent = 'יותר מדי ניסיונות. נסה שוב עוד 30 שניות.';
-      attEl.textContent = '';
       input.disabled = true;
-      lockTimeout = setTimeout(() => {
-        lockAttempts = 0;
-        lockTimeout = null;
-        input.disabled = false;
-        errEl.textContent = '';
-        attEl.textContent = '';
-        input.focus();
-      }, 30000);
+      lockTimeout = setTimeout(() => { lockAttempts=0;lockTimeout=null;input.disabled=false;errEl.textContent='';attEl.textContent='';input.focus(); }, 30000);
     } else {
       errEl.textContent = 'סיסמה שגויה.';
       attEl.textContent = `${left} ניסיונות נותרו`;
@@ -449,45 +440,40 @@ async function unlock() {
     input.focus();
   }
 }
+window.addEventListener('DOMContentLoaded', () => document.getElementById('lockInput').focus());
 
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('lockInput').focus();
-});
-
-/* ─── CONFIG ─────────────────────────────────── */
-const CLOUD_NAME    = 'dcgphfbro';
+/* ─── CONFIG ─── */
+const CLOUD_NAME = 'dcgphfbro';
 const UPLOAD_PRESET = 'ml_default26';
+const EJS_PUBLIC_KEY  = 'RfdcIYTkhL6i54X1Q';
+const EJS_SERVICE_ID  = 'service_0q2l65o';
+const EJS_TEMPLATE_ID = 'template_vuavtaf';
+emailjs.init({ publicKey: EJS_PUBLIC_KEY });
 
-/* ─── STATE ──────────────────────────────────── */
+/* ─── STATE ─── */
 const state = {
   n1:{ logoUrl:'', galleryImages:[], sectionImages:{}, sections:{hashkafa:[],beayin:[],halacha:[],refuah:[],zikaron:[]}, lessons:[], ads:[], courses:[], period:'השבוע', uploadingCount:0 },
   n2:{ logoUrl:'', galleryImages:[], sectionImages:{}, sections:{chinuch:[],shalom:[],nefesh:[],shiduchim:[],meituadkenim:[]}, lessons:[], ads:[], courses:[], period:'השבוע', uploadingCount:0 },
   n3:{ logoUrl:'', galleryImages:[], sectionImages:{}, sections:{dvar:[]}, captionedPhotos:[], uploadingCount:0 }
 };
-let sectionId = 0;
-let captionId = 0;
-let generatedHTML = '';
-let currentNLName = '';
+let sectionId=0, captionId=0, generatedHTML='', currentNLName='', currentNLNum=0;
 
-/* ─── UTILS ──────────────────────────────────── */
+/* ─── UTILS ─── */
 const v = id => { const e=document.getElementById(id); return e?e.value.trim():''; };
 const esc = s => (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const escH = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const ytId = url => { const m=(url||'').match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/); return m?m[1]:null; };
 
-/* ─── TAB SWITCH ─────────────────────────────── */
 function switchNL(n) {
   document.querySelectorAll('.nl-tab').forEach((t,i)=>t.classList.toggle('active',i===n-1));
   document.querySelectorAll('.nl-panel').forEach(p=>p.classList.toggle('active',p.id===`nlPanel${n}`));
 }
-
-/* ─── PERIOD ─────────────────────────────────── */
 function setPeriod(prefix, val, btn) {
   state[prefix].period = val;
   document.getElementById(`${prefix}_periodToggle`).querySelectorAll('button').forEach(b=>b.classList.toggle('active',b===btn));
 }
 
-/* ─── CLOUDINARY ─────────────────────────────── */
+/* ─── CLOUDINARY ─── */
 async function uploadToCloudinary(file) {
   const fd = new FormData(); fd.append('file',file); fd.append('upload_preset',UPLOAD_PRESET);
   const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,{method:'POST',body:fd});
@@ -498,7 +484,6 @@ function incU(p){state[p].uploadingCount++;document.getElementById(`${p}_pending
 function decU(p){state[p].uploadingCount=Math.max(0,state[p].uploadingCount-1);if(state[p].uploadingCount===0){document.getElementById(`${p}_pendingWarn`).classList.remove('show');document.getElementById(`${p}_genBtn`).disabled=false;}}
 function showSt(el,st,msg){if(!el)return;el.className=`upload-status ${st}`;el.innerHTML=`${st==='uploading'?'<div class="spinner"></div>':st==='done'?'✅':'❌'} ${msg}`;}
 
-/* ─── LOGO ───────────────────────────────────── */
 async function handleLogo(input,p){
   const file=input.files[0];if(!file)return;
   const stEl=document.getElementById(`${p}_logoStatus`);
@@ -511,8 +496,6 @@ async function handleLogo(input,p){
   catch(e){state[p].logoUrl='';img.style.display='none';document.getElementById(`${p}_logoZone`).style.display='';showSt(stEl,'error','שגיאה: '+e.message);}
   finally{decU(p);}
 }
-
-/* ─── GALLERY ────────────────────────────────── */
 function handleGallery(input,p){
   const rem=6-state[p].galleryImages.length;
   Array.from(input.files).slice(0,rem).forEach(async file=>{
@@ -531,7 +514,7 @@ function renderGT(p){
     ${!img.uploading?`<button class="rm" onclick="removeGI('${p}',${i})">✕</button>`:''}</div>`).join('');
 }
 
-/* ─── SECTIONS ───────────────────────────────── */
+/* ─── SECTIONS ─── */
 function addSection(p,topic,label='',title='',body='',quote=''){
   const id=++sectionId;
   state[p].sections[topic].push({id,label,title,body,quote,imgUrl:''});
@@ -584,7 +567,7 @@ async function handleSecImg(input,p,topic,id,idx){
 }
 function clearSecImg(p,topic,id,idx){delete state[p].sectionImages[id];state[p].sections[topic][idx].imgUrl='';renderSections(p,topic);}
 
-/* ─── CAPTIONED PHOTOS (NL3) ─────────────────── */
+/* ─── CAPTIONED PHOTOS ─── */
 function addCaptionedPhoto(){
   const id=++captionId;
   state.n3.captionedPhotos.push({id,url:'',caption:'',uploading:false});
@@ -619,10 +602,8 @@ async function handleCapImg(input,id,idx){
   }finally{decU('n3');}
 }
 
-/* ─── LIST ITEMS ─────────────────────────────── */
-function addListItem(p,key){
-  state[p][key].push({text:'',url:''});renderList(p,key);
-}
+/* ─── LIST ITEMS ─── */
+function addListItem(p,key){state[p][key].push({text:'',url:''});renderList(p,key);}
 function removeListItem(p,key,i){state[p][key].splice(i,1);renderList(p,key);}
 function renderList(p,key){
   const el=document.getElementById(`${p}_${key}List`);if(!el)return;
@@ -634,7 +615,7 @@ function renderList(p,key){
     </div>`).join('');
 }
 
-/* ─── HTML BUILDERS ──────────────────────────── */
+/* ─── HTML BUILDERS ─── */
 const NL_FONTS=`<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+Hebrew:wght@400;600;700;900&display=swap" rel="stylesheet">`;
 
 function buildSectionsHtml(sections,ac,acLight){
@@ -650,14 +631,13 @@ function buildSectionsHtml(sections,ac,acLight){
 }
 function buildTopicHtml(label,sections,ac,acLight,org='',subtitle=''){
   if(!sections.length)return'';
-  const orgLine=org?`<div style="font-family:'Inter','Heebo',sans-serif;font-size:11px;color:#888;margin-bottom:3px">${escH(org)}</div>`:'';
-  const subLine=subtitle?`<div style="font-family:'Inter','Heebo',sans-serif;font-size:12.5px;color:#555;margin-bottom:18px;font-weight:500">${escH(subtitle)}</div>`:'';
   return `<div style="margin-bottom:40px">
     <div style="display:flex;align-items:center;margin-bottom:8px">
       <div style="width:3px;height:28px;background:${ac};border-radius:2px;margin-left:12px;flex-shrink:0"></div>
-      <div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:20px;font-weight:700;color:#111;letter-spacing:0">${escH(label)}</div>
+      <div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:20px;font-weight:700;color:#111">${escH(label)}</div>
     </div>
-    ${orgLine}${subLine}
+    ${org?`<div style="font-family:'Inter','Heebo',sans-serif;font-size:11px;color:#888;margin-bottom:3px">${escH(org)}</div>`:''}
+    ${subtitle?`<div style="font-family:'Inter','Heebo',sans-serif;font-size:12.5px;color:#555;margin-bottom:18px;font-weight:500">${escH(subtitle)}</div>`:''}
     ${buildSectionsHtml(sections,ac,acLight)}
   </div>`;
 }
@@ -666,7 +646,7 @@ function buildGalleryHtml(imgs,caption){
   const cols=Math.min(imgs.length,3),w=Math.floor(100/cols);
   const cells=imgs.map(img=>`<td width="${w}%" style="padding:4px;vertical-align:top"><img src="${img.url}" width="100%" style="width:100%;height:160px;object-fit:cover;display:block;border-radius:8px" alt="" /></td>`).join('');
   return `<div style="margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid #ececec">
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse"><tr>${cells}</tr></table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>${cells}</tr></table>
     ${caption?`<p style="text-align:center;font-size:12px;color:#888;margin:10px 0 0;font-family:'Inter','Heebo',sans-serif">${escH(caption)}</p>`:''}
   </div>`;
 }
@@ -689,7 +669,7 @@ function buildCrossHtml(text,url,ac){
 }
 function buildDonateHtml(text,url,ac){
   if(!text.trim())return'';
-  const btn=url.trim()?`<a href="${escH(url)}" style="display:inline-block;background:${ac};color:#fff;padding:13px 30px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;font-family:'Inter','Heebo',sans-serif;letter-spacing:0.3px">${escH(text)}</a>`:`<span style="display:inline-block;background:${ac};color:#fff;padding:13px 30px;border-radius:8px;font-size:14px;font-weight:700;font-family:'Inter','Heebo',sans-serif">${escH(text)}</span>`;
+  const btn=url.trim()?`<a href="${escH(url)}" style="display:inline-block;background:${ac};color:#fff;padding:13px 30px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;font-family:'Inter','Heebo',sans-serif">${escH(text)}</a>`:`<span style="display:inline-block;background:${ac};color:#fff;padding:13px 30px;border-radius:8px;font-size:14px;font-weight:700;font-family:'Inter','Heebo',sans-serif">${escH(text)}</span>`;
   return`<div style="text-align:center;margin-bottom:30px;padding:14px">${btn}</div>`;
 }
 function buildListHtml(items,title,ac){
@@ -703,22 +683,21 @@ function buildListHtml(items,title,ac){
 }
 function buildUnsub(){return`<div style="text-align:center;padding:12px 0;font-family:'Inter','Heebo',sans-serif"><a href="https://basis20il.github.io/newsletter-editor/*%7CUNSUB%7C*" style="color:rgba(255,255,255,0.7);text-decoration:underline;font-size:12px;font-weight:500">הסר אותי מרשימת התפוצה</a><br><span style="font-size:10px;color:rgba(255,255,255,0.25)">*|REWARDS|*</span></div>`;}
 
-/* ─── GENERATE ───────────────────────────────── */
+/* ─── GENERATE ─── */
 function generate(nlNum){
   const p=`n${nlNum}`;
   if(state[p].uploadingCount>0){alert('אנא המתן לסיום העלאת התמונות.');return;}
 
-  /* ── NL1: היכל ההוראה — שחור + כחול ── */
   if(nlNum===1){
     const ac='#1e3a6e',ac2='#2a52a0',acL='#eef2f9';
     const orgL1=v('n1_orgLine1'),orgL2=v('n1_orgLine2'),main=v('n1_mainTitle'),iss=v('n1_issueTitle');
     const logoH=state.n1.logoUrl?`<img src="${state.n1.logoUrl}" width="110" style="width:110px;height:auto;margin:0 auto 16px;display:block" alt="לוגו" />`:'';
     const topics=[
-      buildTopicHtml('אקטואליה בפרשה', state.n1.sections.hashkafa, ac2,acL,'','הגיגי השקפה ומחשבה בניחוח אקטואלי לזמננו'),
-      buildTopicHtml('בעין הסערה',     state.n1.sections.beayin,   ac2,acL,'','סוגיות טעונות מחיי היום יום וניתובם עפ"י התורה'),
-      buildTopicHtml('הלכה והנהגה',   state.n1.sections.halacha,  ac2,acL,'מכותלי בית ההוראה',''),
-      buildTopicHtml('רפואה בהלכה',   state.n1.sections.refuah,   ac2,acL,'פנינים ופסקים מבית ההוראה',''),
-      buildTopicHtml('לזכרון עולם 🕯', state.n1.sections.zikaron,  ac2,acL,'דמותם של רבותנו המהווים אור בדרכנו',''),
+      buildTopicHtml('אקטואליה בפרשה',state.n1.sections.hashkafa,ac2,acL,'','הגיגי השקפה ומחשבה בניחוח אקטואלי לזמננו'),
+      buildTopicHtml('בעין הסערה',state.n1.sections.beayin,ac2,acL,'','סוגיות טעונות מחיי היום יום וניתובם עפ"י התורה'),
+      buildTopicHtml('הלכה והנהגה',state.n1.sections.halacha,ac2,acL,'מכותלי בית ההוראה',''),
+      buildTopicHtml('רפואה בהלכה',state.n1.sections.refuah,ac2,acL,'פנינים ופסקים מבית ההוראה',''),
+      buildTopicHtml('לזכרון עולם 🕯',state.n1.sections.zikaron,ac2,acL,'דמותם של רבותנו המהווים אור בדרכנו',''),
     ].join('');
     const gal=buildGalleryHtml(state.n1.galleryImages,v('n1_galleryCaption'));
     const vid=buildVideoHtml(v('n1_videoUrl'),v('n1_videoTitle'),ac2);
@@ -727,66 +706,38 @@ function generate(nlNum){
     const lessons=buildListHtml(state.n1.lessons,`שיעורי ${state.n1.period}`,ac2);
     const ads=buildListHtml(state.n1.ads,'פרסומים',ac2);
     const courses=buildListHtml(state.n1.courses,'קורסים',ac2);
-
-    generatedHTML=`<!DOCTYPE html>
-<html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>${escH(main)}</title>
-${NL_FONTS}
-</head>
+    generatedHTML=`<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${escH(main)}</title>${NL_FONTS}</head>
 <body style="margin:0;padding:0;background:#f0f2f5;font-family:'Noto Serif Hebrew',Georgia,serif;direction:rtl;color:#111">
 <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f0f2f5"><tr><td align="center" style="padding:32px 16px">
 <table width="620" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,0.09)">
-
-  <!-- TOP BAR -->
-  <tr><td style="background:linear-gradient(135deg,#0a1628 0%,#1e3a6e 100%);padding:10px 36px;text-align:center">
-    <div style="font-family:'Inter','Heebo',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(150,180,230,0.85);text-transform:uppercase;font-weight:600">${escH(orgL1)}</div>
-  </td></tr>
-
-  <!-- HERO HEADER -->
-  <tr><td style="background:linear-gradient(160deg,#0d1f45 0%,#1e3a6e 55%,#2a52a0 100%);padding:44px 44px 36px;text-align:center">
-    ${logoH}
-    <div style="font-family:'Inter','Heebo',sans-serif;font-size:11px;color:rgba(180,210,255,0.7);letter-spacing:2px;margin-bottom:14px;font-weight:500">${escH(orgL2)}</div>
-    <div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:48px;font-weight:900;color:#fff;line-height:1.1;letter-spacing:-0.5px">${escH(main)}</div>
-    <div style="margin:18px auto 0;max-width:400px;font-family:'Inter','Heebo',sans-serif;font-size:13px;color:rgba(200,220,255,0.75);line-height:1.6;font-weight:400">${escH(iss)}</div>
-    <div style="margin-top:20px;display:inline-block;border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.65);font-family:'Inter','Heebo',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;padding:5px 18px;border-radius:20px;text-transform:uppercase">בית הוראה ומוסדות נחלת יוסף</div>
-  </td></tr>
-
-  <!-- CONTENT -->
-  <tr><td style="padding:40px 44px 32px;direction:rtl;background:#fff">
-    ${topics}${cross}${gal}${donate}${lessons}${ads}${courses}${vid}
-  </td></tr>
-
-  <!-- FOOTER -->
-  <tr><td style="background:linear-gradient(135deg,#0a1628 0%,#1e3a6e 100%);padding:28px 44px 22px;text-align:center">
-    <div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:0">${escH(v('n1_foot1'))}</div>
-    <div style="font-family:'Inter','Heebo',sans-serif;color:rgba(160,195,255,0.55);font-size:10px;letter-spacing:2px;margin-bottom:16px;font-weight:500">${escH(v('n1_foot2'))}</div>
-    <div style="width:40px;height:1px;background:rgba(255,255,255,0.15);margin:0 auto 16px"></div>
-    ${buildUnsub()}
-    <div style="margin-top:10px;font-family:'Inter','Heebo',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.5px">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
-  </td></tr>
-
+<tr><td style="background:linear-gradient(135deg,#0a1628 0%,#1e3a6e 100%);padding:10px 36px;text-align:center"><div style="font-family:'Inter','Heebo',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(150,180,230,0.85);text-transform:uppercase;font-weight:600">${escH(orgL1)}</div></td></tr>
+<tr><td style="background:linear-gradient(160deg,#0d1f45 0%,#1e3a6e 55%,#2a52a0 100%);padding:44px 44px 36px;text-align:center">${logoH}
+<div style="font-family:'Inter','Heebo',sans-serif;font-size:11px;color:rgba(180,210,255,0.7);letter-spacing:2px;margin-bottom:14px;font-weight:500">${escH(orgL2)}</div>
+<div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:48px;font-weight:900;color:#fff;line-height:1.1">${escH(main)}</div>
+<div style="margin:18px auto 0;max-width:400px;font-family:'Inter','Heebo',sans-serif;font-size:13px;color:rgba(200,220,255,0.75);line-height:1.6">${escH(iss)}</div>
+<div style="margin-top:20px;display:inline-block;border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.65);font-family:'Inter','Heebo',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;padding:5px 18px;border-radius:20px">בית הוראה ומוסדות נחלת יוסף</div>
+</td></tr>
+<tr><td style="padding:40px 44px 32px;direction:rtl;background:#fff">${topics}${cross}${gal}${donate}${lessons}${ads}${courses}${vid}</td></tr>
+<tr><td style="background:linear-gradient(135deg,#0a1628 0%,#1e3a6e 100%);padding:28px 44px 22px;text-align:center">
+<div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:4px">${escH(v('n1_foot1'))}</div>
+<div style="font-family:'Inter','Heebo',sans-serif;color:rgba(160,195,255,0.55);font-size:10px;letter-spacing:2px;margin-bottom:16px">${escH(v('n1_foot2'))}</div>
+<div style="width:40px;height:1px;background:rgba(255,255,255,0.15);margin:0 auto 16px"></div>
+${buildUnsub()}
+<div style="margin-top:10px;font-family:'Inter','Heebo',sans-serif;font-size:10px;color:rgba(255,255,255,0.2)">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
+</td></tr>
 </table></td></tr></table></body></html>`;
     currentNLName='היכל ההוראה';
 
-  /* ── NL2: חינוך ושלום בית — תכלת/חום/צהוב ── */
   } else if(nlNum===2){
     const ac='#7c5c1a',ac2='#9e7a22',acL='#fdf8ee';
     const orgL1=v('n2_orgLine1'),orgL2=v('n2_orgLine2'),main=v('n2_mainTitle'),iss=v('n2_issueTitle');
     const logoH=state.n2.logoUrl?`<img src="${state.n2.logoUrl}" width="110" style="width:110px;height:auto;margin:0 auto 16px;display:block" alt="לוגו" />`:'';
     const topics=[
-      buildTopicHtml('חינוך',    state.n2.sections.chinuch,   ac2,acL,
-        'מכון הכוונה — חינוך ויעוץ תורני מקצועי',
-        'טיפים ועצות בנושאי חינוך ויעוץ והנחיית הורים'),
-      buildTopicHtml('מחוברים', state.n2.sections.shalom,    ac2,acL,
-        'יעוץ וגישור וליווי פרטני מקצועי — בהנחיית מורנו הרב שליט"א',
-        'טעימות מחיי זוגיות תקינה'),
-      buildTopicHtml('ממעמקים',  state.n2.sections.nefesh,    ac2,acL,
-        'המרכז לבריאות הנפש — בפיקוח מורנו הרב שליט"א',
-        'אוצרות של אימון והעצמה בענייני הנפש'),
-      buildTopicHtml('אושר החיים', state.n2.sections.shiduchim, ac2,acL,
-        'ארגון "בניין לדורות" בניהולה של הרבנית יפה דרעי תחי\' ובהכוונת מורנו הרב שליט"א',
-        'מעיינות של אור בענייני שידוכין'),
-      buildTopicHtml('מתעדכנים', state.n2.sections.meituadkenim, ac2,acL,'',''),
+      buildTopicHtml('חינוך',state.n2.sections.chinuch,ac2,acL,'מכון הכוונה — חינוך ויעוץ תורני מקצועי','טיפים ועצות בנושאי חינוך ויעוץ והנחיית הורים'),
+      buildTopicHtml('מחוברים',state.n2.sections.shalom,ac2,acL,'יעוץ וגישור וליווי פרטני מקצועי','טעימות מחיי זוגיות תקינה'),
+      buildTopicHtml('ממעמקים',state.n2.sections.nefesh,ac2,acL,'המרכז לבריאות הנפש','אוצרות של אימון והעצמה בענייני הנפש'),
+      buildTopicHtml('אושר החיים',state.n2.sections.shiduchim,ac2,acL,'ארגון "בניין לדורות"','מעיינות של אור בענייני שידוכין'),
+      buildTopicHtml('מתעדכנים',state.n2.sections.meituadkenim,ac2,acL,'',''),
     ].join('');
     const gal=buildGalleryHtml(state.n2.galleryImages,v('n2_galleryCaption'));
     const vid=buildVideoHtml(v('n2_videoUrl'),v('n2_videoTitle'),ac2);
@@ -795,53 +746,29 @@ ${NL_FONTS}
     const lessons=buildListHtml(state.n2.lessons,`שיעורי ${state.n2.period}`,ac2);
     const ads=buildListHtml(state.n2.ads,'פרסומים',ac2);
     const courses=buildListHtml(state.n2.courses,'קורסים',ac2);
-
-    generatedHTML=`<!DOCTYPE html>
-<html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>${escH(main)}</title>
-${NL_FONTS}
-</head>
+    generatedHTML=`<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${escH(main)}</title>${NL_FONTS}</head>
 <body style="margin:0;padding:0;background:#f5f0e8;font-family:'Noto Serif Hebrew',Georgia,serif;direction:rtl;color:#111">
 <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f5f0e8"><tr><td align="center" style="padding:32px 16px">
 <table width="620" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;width:100%;background:#fffdf8;border-radius:16px;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,0.08)">
-
-  <!-- TOP ACCENT BAR -->
-  <tr><td style="padding:0;height:5px;background:linear-gradient(90deg,#c9952a 0%,#e8b84b 50%,#c9952a 100%)"></td></tr>
-
-  <!-- TOP META -->
-  <tr><td style="background:#7c5c1a;padding:9px 36px;text-align:center">
-    <div style="font-family:'Inter','Heebo',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(255,240,200,0.8);text-transform:uppercase;font-weight:600">${escH(orgL1)}</div>
-  </td></tr>
-
-  <!-- HERO HEADER -->
-  <tr><td style="background:linear-gradient(160deg,#5c3d0a 0%,#7c5c1a 50%,#9e7a22 100%);padding:46px 44px 38px;text-align:center">
-    ${logoH}
-    <div style="font-family:'Inter','Heebo',sans-serif;font-size:11px;color:rgba(255,235,180,0.65);letter-spacing:2px;margin-bottom:14px;font-weight:500">${escH(orgL2)}</div>
-    <div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:50px;font-weight:900;color:#fff;line-height:1;letter-spacing:-0.5px">${escH(main)}</div>
-    <div style="margin:16px auto 0;max-width:440px;font-family:'Inter','Heebo',sans-serif;font-size:13px;color:rgba(255,230,170,0.75);line-height:1.7;font-weight:400">${escH(iss)}</div>
-  </td></tr>
-
-  <!-- CONTENT -->
-  <tr><td style="padding:42px 44px 32px;direction:rtl;background:#fffdf8">
-    ${topics}${cross}${gal}${donate}${lessons}${ads}${courses}${vid}
-  </td></tr>
-
-  <!-- FOOTER -->
-  <tr><td style="background:linear-gradient(135deg,#5c3d0a 0%,#7c5c1a 100%);padding:28px 44px 22px;text-align:center">
-    <div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:4px">${escH(v('n2_foot1'))}</div>
-    <div style="font-family:'Inter','Heebo',sans-serif;color:rgba(255,220,140,0.5);font-size:10px;letter-spacing:2px;margin-bottom:16px;font-weight:500">${escH(v('n2_foot2'))}</div>
-    <div style="width:40px;height:1px;background:rgba(255,255,255,0.15);margin:0 auto 16px"></div>
-    ${buildUnsub()}
-    <div style="margin-top:10px;font-family:'Inter','Heebo',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.5px">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
-  </td></tr>
-
-  <!-- BOTTOM ACCENT -->
-  <tr><td style="padding:0;height:4px;background:linear-gradient(90deg,#c9952a 0%,#e8b84b 50%,#c9952a 100%)"></td></tr>
-
+<tr><td style="padding:0;height:5px;background:linear-gradient(90deg,#c9952a 0%,#e8b84b 50%,#c9952a 100%)"></td></tr>
+<tr><td style="background:#7c5c1a;padding:9px 36px;text-align:center"><div style="font-family:'Inter','Heebo',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(255,240,200,0.8);text-transform:uppercase;font-weight:600">${escH(orgL1)}</div></td></tr>
+<tr><td style="background:linear-gradient(160deg,#5c3d0a 0%,#7c5c1a 50%,#9e7a22 100%);padding:46px 44px 38px;text-align:center">${logoH}
+<div style="font-family:'Inter','Heebo',sans-serif;font-size:11px;color:rgba(255,235,180,0.65);letter-spacing:2px;margin-bottom:14px">${escH(orgL2)}</div>
+<div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:50px;font-weight:900;color:#fff;line-height:1">${escH(main)}</div>
+<div style="margin:16px auto 0;max-width:440px;font-family:'Inter','Heebo',sans-serif;font-size:13px;color:rgba(255,230,170,0.75);line-height:1.7">${escH(iss)}</div>
+</td></tr>
+<tr><td style="padding:42px 44px 32px;direction:rtl;background:#fffdf8">${topics}${cross}${gal}${donate}${lessons}${ads}${courses}${vid}</td></tr>
+<tr><td style="background:linear-gradient(135deg,#5c3d0a 0%,#7c5c1a 100%);padding:28px 44px 22px;text-align:center">
+<div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:4px">${escH(v('n2_foot1'))}</div>
+<div style="font-family:'Inter','Heebo',sans-serif;color:rgba(255,220,140,0.5);font-size:10px;letter-spacing:2px;margin-bottom:16px">${escH(v('n2_foot2'))}</div>
+<div style="width:40px;height:1px;background:rgba(255,255,255,0.15);margin:0 auto 16px"></div>
+${buildUnsub()}
+<div style="margin-top:10px;font-family:'Inter','Heebo',sans-serif;font-size:10px;color:rgba(255,255,255,0.2)">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
+</td></tr>
+<tr><td style="padding:0;height:4px;background:linear-gradient(90deg,#c9952a 0%,#e8b84b 50%,#c9952a 100%)"></td></tr>
 </table></td></tr></table></body></html>`;
     currentNLName='רוממות — חינוך';
 
-  /* ── NL3: קול אחיי — צבעוני ססגוני ── */
   } else if(nlNum===3){
     const acOrange='#d44000',acGreen='#2d8a4e',acPurple='#6b3fa0',acLight='#fff5f0';
     const main=v('n3_mainTitle'),sub=v('n3_subLine'),orgL2=v('n3_orgLine2'),iss=v('n3_issueTitle');
@@ -855,119 +782,104 @@ ${NL_FONTS}
     const vid=buildVideoHtml(v('n3_videoUrl'),v('n3_videoTitle'),acOrange);
     const cross=buildCrossHtml(v('n3_crossText'),v('n3_crossUrl'),acGreen);
     const donate=buildDonateHtml(v('n3_donateText'),v('n3_donateUrl'),acOrange);
-
-    generatedHTML=`<!DOCTYPE html>
-<html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>${escH(main)}</title>
-${NL_FONTS}
-</head>
+    generatedHTML=`<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${escH(main)}</title>${NL_FONTS}</head>
 <body style="margin:0;padding:0;background:#faf5ef;font-family:'Noto Serif Hebrew',Georgia,serif;direction:rtl;color:#111">
 <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#faf5ef"><tr><td align="center" style="padding:32px 16px">
 <table width="620" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,0.08)">
-
-  <!-- RAINBOW TOP -->
-  <tr><td style="padding:0"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-    <td width="33%" style="background:${acOrange};height:5px"></td>
-    <td width="34%" style="background:${acGreen};height:5px"></td>
-    <td width="33%" style="background:${acPurple};height:5px"></td>
-  </tr></table></td></tr>
-
-  <!-- HERO -->
-  <tr><td style="background:#1a1a1a;padding:44px 44px 36px;text-align:center">
-    ${logoH}
-    <div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:56px;font-weight:900;line-height:1;margin-bottom:10px">
-      <span style="color:${acOrange}">קול</span> <span style="color:#fff">אחיי</span>
-    </div>
-    <div style="font-family:'Inter','Heebo',sans-serif;font-size:12px;color:${acGreen};font-weight:700;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase">${escH(sub)}</div>
-    <div style="font-family:'Inter','Heebo',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:14px">${escH(orgL2)}</div>
-    <div style="display:inline-block;background:${acPurple};color:#fff;font-family:'Inter','Heebo',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:6px 20px;border-radius:20px;text-transform:uppercase">${escH(iss)}</div>
-  </td></tr>
-
-  ${dvarH?`<!-- DVAR TORAH -->
-  <tr><td style="padding:0;background:#fff">
-    <div style="background:${acOrange};color:#fff;padding:10px 44px;font-family:'Inter','Heebo',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase">דבר תורה</div>
-  </td></tr>
-  <tr><td style="padding:36px 44px;direction:rtl;background:#fff">${dvarH}</td></tr>`:''}
-
-  ${capH?`<!-- GALLERY -->
-  <tr><td style="padding:0;background:#fff">
-    <div style="background:${acGreen};color:#fff;padding:10px 44px;font-family:'Inter','Heebo',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase">מהנעשה</div>
-  </td></tr>
-  <tr><td style="padding:32px 44px;direction:rtl;background:#fff">${capH}</td></tr>`:''}
-
-  <tr><td style="padding:8px 44px 36px;direction:rtl;background:#fff">${vid}${cross}${donate}</td></tr>
-
-  <!-- RAINBOW BOTTOM -->
-  <tr><td style="padding:0"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-    <td width="33%" style="background:${acOrange};height:4px"></td>
-    <td width="34%" style="background:${acGreen};height:4px"></td>
-    <td width="33%" style="background:${acPurple};height:4px"></td>
-  </tr></table></td></tr>
-
-  <!-- FOOTER -->
-  <tr><td style="background:#111;padding:26px 44px 22px;text-align:center">
-    <div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:20px;font-weight:700;margin-bottom:4px">
-      <span style="color:${acOrange}">קול</span><span style="color:#fff"> אחיי</span>
-    </div>
-    <div style="font-family:'Inter','Heebo',sans-serif;color:#fff;font-size:13px;font-weight:600;margin-bottom:3px">${escH(v('n3_foot1'))}</div>
-    <div style="font-family:'Inter','Heebo',sans-serif;color:rgba(255,255,255,0.3);font-size:10px;letter-spacing:2px;margin-bottom:16px">${escH(v('n3_foot2'))}</div>
-    <div style="width:40px;height:1px;background:rgba(255,255,255,0.12);margin:0 auto 14px"></div>
-    ${buildUnsub()}
-    <div style="margin-top:10px;font-family:'Inter','Heebo',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.5px">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
-  </td></tr>
-
+<tr><td style="padding:0"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="33%" style="background:${acOrange};height:5px"></td><td width="34%" style="background:${acGreen};height:5px"></td><td width="33%" style="background:${acPurple};height:5px"></td>
+</tr></table></td></tr>
+<tr><td style="background:#1a1a1a;padding:44px 44px 36px;text-align:center">${logoH}
+<div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:56px;font-weight:900;line-height:1;margin-bottom:10px">
+<span style="color:${acOrange}">קול</span> <span style="color:#fff">אחיי</span></div>
+<div style="font-family:'Inter','Heebo',sans-serif;font-size:12px;color:${acGreen};font-weight:700;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase">${escH(sub)}</div>
+<div style="font-family:'Inter','Heebo',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:14px">${escH(orgL2)}</div>
+<div style="display:inline-block;background:${acPurple};color:#fff;font-family:'Inter','Heebo',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:6px 20px;border-radius:20px">${escH(iss)}</div>
+</td></tr>
+${dvarH?`<tr><td style="padding:0;background:#fff"><div style="background:${acOrange};color:#fff;padding:10px 44px;font-family:'Inter','Heebo',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase">דבר תורה</div></td></tr>
+<tr><td style="padding:36px 44px;direction:rtl;background:#fff">${dvarH}</td></tr>`:''}
+${capH?`<tr><td style="padding:0;background:#fff"><div style="background:${acGreen};color:#fff;padding:10px 44px;font-family:'Inter','Heebo',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase">מהנעשה</div></td></tr>
+<tr><td style="padding:32px 44px;direction:rtl;background:#fff">${capH}</td></tr>`:''}
+<tr><td style="padding:8px 44px 36px;direction:rtl;background:#fff">${vid}${cross}${donate}</td></tr>
+<tr><td style="padding:0"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="33%" style="background:${acOrange};height:4px"></td><td width="34%" style="background:${acGreen};height:4px"></td><td width="33%" style="background:${acPurple};height:4px"></td>
+</tr></table></td></tr>
+<tr><td style="background:#111;padding:26px 44px 22px;text-align:center">
+<div style="font-family:'Noto Serif Hebrew',Georgia,serif;font-size:20px;font-weight:700;margin-bottom:4px"><span style="color:${acOrange}">קול</span><span style="color:#fff"> אחיי</span></div>
+<div style="font-family:'Inter','Heebo',sans-serif;color:#fff;font-size:13px;font-weight:600;margin-bottom:3px">${escH(v('n3_foot1'))}</div>
+<div style="font-family:'Inter','Heebo',sans-serif;color:rgba(255,255,255,0.3);font-size:10px;letter-spacing:2px;margin-bottom:16px">${escH(v('n3_foot2'))}</div>
+<div style="width:40px;height:1px;background:rgba(255,255,255,0.12);margin:0 auto 14px"></div>
+${buildUnsub()}
+<div style="margin-top:10px;font-family:'Inter','Heebo',sans-serif;font-size:10px;color:rgba(255,255,255,0.2)">קידוד ופיתוח: צח פתרונות | 0555-615243</div>
+</td></tr>
 </table></td></tr></table></body></html>`;
     currentNLName='קול אחיי';
   }
 
+  currentNLNum = nlNum;
   const iframe=document.getElementById('pif');
   iframe.srcdoc=generatedHTML;iframe.style.display='block';
   document.getElementById('emptyState').style.display='none';
   document.getElementById('dlBtn').classList.add('show');
-  document.getElementById('sendBtn').classList.add('show');
   document.getElementById('previewLabel').textContent=`תצוגה מקדימה — ${currentNLName}`;
   iframe.onload=()=>{try{iframe.style.minHeight=(iframe.contentDocument.body.scrollHeight+60)+'px';}catch(e){}};
+
+  // Show submit button for this NL
+  document.querySelectorAll('.btn-submit').forEach(b=>b.style.display='none');
+  const subBtn = document.getElementById(`n${nlNum}_submitBtn`);
+  if(subBtn) subBtn.style.display='block';
 }
 
-/* ─── EMAILJS ────────────────────────────────── */
-const EJS_PUBLIC_KEY  = 'RfdcIYTkhL6i54X1Q';
-const EJS_SERVICE_ID  = 'service_0q2l65o';
-const EJS_TEMPLATE_ID = 'template_vuavtaf';
+/* ─── SUBMIT TO FIREBASE + EMAIL ─── */
+async function submitNewsletter(nlNum) {
+  if(!generatedHTML){ alert('אנא צור תצוגה מקדימה תחילה.'); return; }
 
-emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+  const p = `n${nlNum}`;
+  if(state[p].uploadingCount>0){ alert('אנא המתן לסיום העלאת התמונות.'); return; }
 
-function showToast(msg, duration=3500) {
-  const t = document.getElementById('sendToast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
-}
-
-async function sendByEmail() {
-  if (!generatedHTML) return;
-  const btn = document.getElementById('sendBtn');
+  const btn = document.getElementById(`n${nlNum}_submitBtn`);
   btn.disabled = true;
   btn.textContent = '⏳ שולח...';
 
-  const date = new Date().toLocaleDateString('he-IL');
-
   try {
+    // 1. Save to Firebase
+    const docId = await window._fbSaveNewsletter(currentNLName, generatedHTML);
+
+    // 2. Send email notification via EmailJS
+    const date = new Date().toLocaleDateString('he-IL', {
+      weekday:'long', year:'numeric', month:'long', day:'numeric'
+    });
+    const adminUrl = `https://sendnew-8cb54.web.app/admin.html?id=${docId}`;
+
     await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
       newsletter_name: currentNLName,
       date: date,
-      message: generatedHTML
+      doc_id: docId,
+      admin_url: adminUrl,
+      message: `ניוזלטר חדש "${currentNLName}" ממתין לעריכה.\n\nתאריך: ${date}\nמזהה: ${docId}\n\nלצפייה ולהורדה:\n${adminUrl}`
     });
-    showToast(`✅ הניוזלטר נשלח בהצלחה למייל!`);
+
+    showToast(`✅ הניוזלטר נשלח! תקבל מייל עם קישור.`, 4000, 'success');
+    btn.textContent = '✅ נשלח בהצלחה!';
+    setTimeout(()=>{ btn.disabled=false; btn.textContent='✅ סיימתי — שלח לעריכה'; }, 4000);
+
   } catch(err) {
     console.error(err);
-    showToast(`❌ שגיאה בשליחה — בדוק חיבור אינטרנט`);
+    showToast(`❌ שגיאה: ${err.message}`, 4000, 'error');
+    btn.disabled = false;
+    btn.textContent = '✅ סיימתי — שלח לעריכה';
   }
-
-  btn.disabled = false;
-  btn.innerHTML = '📧 שלח לעריכה';
 }
 
-/* ─── DOWNLOAD ───────────────────────────────── */
+/* ─── TOAST ─── */
+function showToast(msg, duration=3500, type='') {
+  const t = document.getElementById('sendToast');
+  t.textContent = msg;
+  t.className = type ? `show ${type}` : 'show';
+  setTimeout(() => t.className = t.className.replace('show','').trim(), duration);
+}
+
+/* ─── DOWNLOAD ─── */
 function download(){
   if(!generatedHTML)return;
   const b=new Blob([generatedHTML],{type:'text/html;charset=utf-8'});
@@ -977,19 +889,16 @@ function download(){
   a.click();URL.revokeObjectURL(u);
 }
 
-/* ─── INIT ───────────────────────────────────── */
+/* ─── INIT ─── */
 (function init(){
-  // NL1 seed
   addSection('n1','hashkafa','אקטואליה בפרשה','כותרת המאמר','');
   addSection('n1','beayin','בעין הסערה','כותרת הסוגיה','');
   addSection('n1','halacha','הלכה והנהגה','כותרת השאלה','');
   addSection('n1','refuah','רפואה בהלכה','','');
-  // NL2 seed
   addSection('n2','chinuch','חינוך','','');
   addSection('n2','shalom','מחוברים','','');
   addSection('n2','nefesh','ממעמקים','','');
   addSection('n2','shiduchim','אושר החיים','','');
-  // NL3 seed
   addSection('n3','dvar','דבר תורה','','');
 })();
 </script>
