@@ -188,7 +188,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
     <h1>בונה ניוזלטר ✦ v4 — נחלת יוסף</h1>
     <div class="nl-tabs" id="nlTabs">
       <button class="nl-tab active" onclick="switchNL(1)">היכל ההוראה</button>
-      <button class="nl-tab" onclick="switchNL(2)">חינוך ושלום בית</button>
+      <button class="nl-tab" onclick="switchNL(2)">רוממות — חינוך</button>
       <button class="nl-tab" onclick="switchNL(3)">קול אחיי</button>
     </div>
   </div>
@@ -200,7 +200,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
       <div class="field"><label>שורה 1 — בית הוראה</label><input type="text" id="n1_orgLine1" value="בית הוראה ומוסדות נחלת יוסף" /></div>
       <div class="field"><label>שורה 2 — בראשות</label><input type="text" id="n1_orgLine2" value='בראשות הגאון הרב יואל חברוני שליט"א' /></div>
       <div class="field"><label>כותרת ראשית</label><input type="text" id="n1_mainTitle" value="היכל ההוראה" /></div>
-      <div class="field"><label>כותרת גיליון</label><input type="text" id="n1_issueTitle" value='גליון שבועי — חודש אייר תשפ"ה' /></div>
+      <div class="field"><label>כותרת גיליון</label><input type="text" id="n1_issueTitle" value="גליון בענייני השקפה, מחשבה, ורפואה בהלכה" /></div>
       <div class="field"><label>לוגו</label>
         <div class="upload-zone" id="n1_logoZone"><input type="file" id="n1_li" accept="image/*" onchange="handleLogo(this,'n1')" /><div class="icon">🏛</div><p>לחץ להעלאת לוגו</p></div>
         <div id="n1_logoStatus"></div><img id="n1_logoPreview" class="logo-preview" style="display:none" /></div>
@@ -208,9 +208,11 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 
     <div class="panel">
       <div class="panel-title">נושאים</div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">השקפה</span></div><div id="n1_sections_hashkafa"></div><button class="add-btn-sm" onclick="addSection('n1','hashkafa')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">הלכה</span></div><div id="n1_sections_halacha"></div><button class="add-btn-sm" onclick="addSection('n1','halacha')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">רפואה בהלכה</span></div><div id="n1_sections_refuah"></div><button class="add-btn-sm" onclick="addSection('n1','refuah')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">אקטואליה בפרשה — הגיגי השקפה ומחשבה בניחוח אקטואלי לזמננו</span></div><div id="n1_sections_hashkafa"></div><button class="add-btn-sm" onclick="addSection('n1','hashkafa')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">בעין הסערה — סוגיות טעונות מחיי היום יום וניתובם עפ"י התורה</span></div><div id="n1_sections_beayin"></div><button class="add-btn-sm" onclick="addSection('n1','beayin')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">הלכה והנהגה — מכותלי בית ההוראה</span></div><div id="n1_sections_halacha"></div><button class="add-btn-sm" onclick="addSection('n1','halacha')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">רפואה בהלכה — פנינים ופסקים מבית ההוראה</span></div><div id="n1_sections_refuah"></div><button class="add-btn-sm" onclick="addSection('n1','refuah')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">לזכרון עולם — דמותם של רבותנו המהווים אור בדרכנו</span></div><div id="n1_sections_zikaron"></div><button class="add-btn-sm" onclick="addSection('n1','zikaron')">+ הוסף סעיף</button></div>
     </div>
 
     <div class="panel">
@@ -228,9 +230,9 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 
     <div class="panel">
       <div class="panel-title">סוף הניוזלטר</div>
-      <div class="field"><label>קישור לניוזלטר אחר — טקסט</label><input type="text" id="n1_crossText" value="לקבלת ניולזטר בנושא חינוך ושלום בית לחצו כאן" /></div>
+      <div class="field"><label>קישור לניוזלטר אחר — טקסט</label><input type="text" id="n1_crossText" value="לקבלת ניוזלטר בנושאי חינוך, יעוץ, שידוכין והעשרה בשלמות המשפחה — הקש כאן" /></div>
       <div class="field"><label>קישור לניוזלטר אחר — URL</label><input type="url" id="n1_crossUrl" placeholder="https://..." /></div>
-      <div class="field"><label>טקסט כפתור תרומות</label><input type="text" id="n1_donateText" value="תרומות לפעילות בית הוראה ומוסדות נחלת יוסף — לחצו כאן" /></div>
+      <div class="field"><label>טקסט כפתור תרומות</label><input type="text" id="n1_donateText" value="בואו לראות ישועות! היו שותפים בזיכוי הרבים הגדול בדרום וטהרת עם ישראל — הקש כאן" /></div>
       <div class="field"><label>קישור תרומות</label><input type="url" id="n1_donateUrl" placeholder="https://..." /></div>
       <div class="field"><label>שיעורי</label>
         <div class="period-toggle" id="n1_periodToggle">
@@ -248,7 +250,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
         <div id="n1_coursesList"></div>
         <button class="add-btn-sm" onclick="addListItem('n1','courses')">+ הוסף קורס</button>
       </div>
-      <div class="field mt4"><label>כותרת תחתית — שורה 1</label><input type="text" id="n1_foot1" value="היכל ההוראה — נחלת יוסף" /></div>
+      <div class="field mt4"><label>כותרת תחתית — שורה 1</label><input type="text" id="n1_foot1" value="היכל ההוראה — בית הוראה ומוסדות נחלת יוסף" /></div>
       <div class="field"><label>כותרת תחתית — שורה 2</label><input type="text" id="n1_foot2" value='גליון שבועי ✦ אייר תשפ"ה' /></div>
     </div>
     <div class="gen-wrap">
@@ -261,10 +263,10 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
   <div class="nl-panel" id="nlPanel2" data-nl="2">
     <div class="panel">
       <div class="panel-title">כותרת</div>
-      <div class="field"><label>שורה 1</label><input type="text" id="n2_orgLine1" value="מרכז רוחני נחלת יוסף" /></div>
+      <div class="field"><label>שורה 1</label><input type="text" id="n2_orgLine1" value="מרכז רוחני ומוסדות נחלת יוסף" /></div>
       <div class="field"><label>שורה 2 — בראשות</label><input type="text" id="n2_orgLine2" value='בראשות הגאון הרב יואל חברוני שליט"א' /></div>
-      <div class="field"><label>כותרת ראשית</label><input type="text" id="n2_mainTitle" value="עלון חינוך ושלום בית" /></div>
-      <div class="field"><label>כותרת גיליון</label><input type="text" id="n2_issueTitle" value='גליון שבועי — חודש אייר תשפ"ה' /></div>
+      <div class="field"><label>כותרת ראשית</label><input type="text" id="n2_mainTitle" value="רוממות" /></div>
+      <div class="field"><label>כותרת גיליון</label><input type="text" id="n2_issueTitle" value="גליון בענייני חינוך, יעוץ, זוגיות, הכרת הנפש, שידוכין, והעשרה בשלמות המשפחה" /></div>
       <div class="field"><label>לוגו</label>
         <div class="upload-zone" id="n2_logoZone"><input type="file" id="n2_li" accept="image/*" onchange="handleLogo(this,'n2')" /><div class="icon">🏠</div><p>לחץ להעלאת לוגו</p></div>
         <div id="n2_logoStatus"></div><img id="n2_logoPreview" class="logo-preview" style="display:none" /></div>
@@ -272,10 +274,11 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 
     <div class="panel">
       <div class="panel-title">נושאים</div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">חינוך</span></div><div id="n2_sections_chinuch"></div><button class="add-btn-sm" onclick="addSection('n2','chinuch')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">שלום בית</span></div><div id="n2_sections_shalom"></div><button class="add-btn-sm" onclick="addSection('n2','shalom')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">נפש</span></div><div id="n2_sections_nefesh"></div><button class="add-btn-sm" onclick="addSection('n2','nefesh')">+ הוסף סעיף</button></div>
-      <div class="topic-block"><div class="tb-head"><span class="tb-label">שידוכין</span></div><div id="n2_sections_shiduchim"></div><button class="add-btn-sm" onclick="addSection('n2','shiduchim')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">חינוך — טיפים ועצות בנושאי חינוך ויעוץ והנחיית הורים</span></div><div id="n2_sections_chinuch"></div><button class="add-btn-sm" onclick="addSection('n2','chinuch')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">מחוברים — טעימות מחיי זוגיות תקינה</span></div><div id="n2_sections_shalom"></div><button class="add-btn-sm" onclick="addSection('n2','shalom')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">ממעמקים — אוצרות של אימון והעצמה בענייני הנפש</span></div><div id="n2_sections_nefesh"></div><button class="add-btn-sm" onclick="addSection('n2','nefesh')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">אושר החיים — מעיינות של אור בענייני שידוכין</span></div><div id="n2_sections_shiduchim"></div><button class="add-btn-sm" onclick="addSection('n2','shiduchim')">+ הוסף סעיף</button></div>
+      <div class="topic-block"><div class="tb-head"><span class="tb-label">מתעדכנים</span></div><div id="n2_sections_meituadkenim"></div><button class="add-btn-sm" onclick="addSection('n2','meituadkenim')">+ הוסף סעיף</button></div>
     </div>
 
     <div class="panel">
@@ -293,9 +296,9 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 
     <div class="panel">
       <div class="panel-title">סוף הניוזלטר</div>
-      <div class="field"><label>קישור לניוזלטר אחר — טקסט</label><input type="text" id="n2_crossText" value="לקבלת ניולזטר בנושא היכל ההוראה ברפואה בהלכה השקפה ומחשבה הקישו כאן" /></div>
+      <div class="field"><label>קישור לניוזלטר אחר — טקסט</label><input type="text" id="n2_crossText" value="לקבלת ניוזלטר בענייני הלכה והנהגה, רפואה בהלכה, השקפה ומחשבה, הקש כאן" /></div>
       <div class="field"><label>קישור לניוזלטר אחר — URL</label><input type="url" id="n2_crossUrl" placeholder="https://..." /></div>
-      <div class="field"><label>טקסט כפתור תרומות</label><input type="text" id="n2_donateText" value="תרומות לפעילות חינוך ושלום בית — נחלת יוסף" /></div>
+      <div class="field"><label>טקסט כפתור תרומות</label><input type="text" id="n2_donateText" value="בואו לקבל ישועות! היו שותפים בהקמת בתים, קירוב רחוקים והצלת עם ישראל — הקש כאן" /></div>
       <div class="field"><label>קישור תרומות</label><input type="url" id="n2_donateUrl" placeholder="https://..." /></div>
       <div class="field"><label>שיעורי</label>
         <div class="period-toggle" id="n2_periodToggle">
@@ -307,12 +310,12 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
       </div>
       <div class="field"><label>פרסומים</label><div id="n2_adsList"></div><button class="add-btn-sm" onclick="addListItem('n2','ads')">+ הוסף פרסום</button></div>
       <div class="field"><label>קורסים</label><div id="n2_coursesList"></div><button class="add-btn-sm" onclick="addListItem('n2','courses')">+ הוסף קורס</button></div>
-      <div class="field mt4"><label>כותרת תחתית — שורה 1</label><input type="text" id="n2_foot1" value="עלון חינוך ושלום בית — נחלת יוסף" /></div>
+      <div class="field mt4"><label>כותרת תחתית — שורה 1</label><input type="text" id="n2_foot1" value="רוממות — מרכז רוחני ומוסדות נחלת יוסף" /></div>
       <div class="field"><label>כותרת תחתית — שורה 2</label><input type="text" id="n2_foot2" value='גליון שבועי ✦ אייר תשפ"ה' /></div>
     </div>
     <div class="gen-wrap">
       <div class="pending-warn" id="n2_pendingWarn">⏳ ממתין לסיום העלאת תמונות...</div>
-      <button class="btn-gen" id="n2_genBtn" onclick="generate(2)">✦ צור ניוזלטר — חינוך ושלום בית</button>
+      <button class="btn-gen" id="n2_genBtn" onclick="generate(2)">✦ צור ניוזלטר — רוממות</button>
     </div>
   </div>
 
@@ -385,7 +388,7 @@ body{font-family:'Heebo',sans-serif;background:#e8e2d8;color:var(--ink);min-heig
 
 <script>
 /* ─── LOCK SCREEN ────────────────────────────── */
-const CORRECT_HASH = 'ec4c88ca7f69534f10c0611c1ecd13e7c2cdf73e1b915e9fd0cf27ac10da43fa'; // SHA-256 of "password"
+const CORRECT_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // SHA-256 of "password"
 // To change the password, update CORRECT_HASH with SHA-256 of your new password.
 // You can generate a SHA-256 hash at: https://emn178.github.io/online-tools/sha256.html
 
@@ -445,8 +448,8 @@ const UPLOAD_PRESET = 'ml_default26';
 
 /* ─── STATE ──────────────────────────────────── */
 const state = {
-  n1:{ logoUrl:'', galleryImages:[], sectionImages:{}, sections:{hashkafa:[],halacha:[],refuah:[]}, lessons:[], ads:[], courses:[], period:'השבוע', uploadingCount:0 },
-  n2:{ logoUrl:'', galleryImages:[], sectionImages:{}, sections:{chinuch:[],shalom:[],nefesh:[],shiduchim:[]}, lessons:[], ads:[], courses:[], period:'השבוע', uploadingCount:0 },
+  n1:{ logoUrl:'', galleryImages:[], sectionImages:{}, sections:{hashkafa:[],beayin:[],halacha:[],refuah:[],zikaron:[]}, lessons:[], ads:[], courses:[], period:'השבוע', uploadingCount:0 },
+  n2:{ logoUrl:'', galleryImages:[], sectionImages:{}, sections:{chinuch:[],shalom:[],nefesh:[],shiduchim:[],meituadkenim:[]}, lessons:[], ads:[], courses:[], period:'השבוע', uploadingCount:0 },
   n3:{ logoUrl:'', galleryImages:[], sectionImages:{}, sections:{dvar:[]}, captionedPhotos:[], uploadingCount:0 }
 };
 let sectionId = 0;
@@ -631,10 +634,13 @@ function buildSectionsHtml(sections,ac,acLight){
       ${img}${paras}${quote}</div>`;
   }).join('');
 }
-function buildTopicHtml(label,sections,ac,acLight){
+function buildTopicHtml(label,sections,ac,acLight,org='',subtitle=''){
   if(!sections.length)return'';
+  const orgLine=org?`<div style="font-size:11px;color:#888;margin-top:4px;margin-bottom:2px;font-style:italic">${escH(org)}</div>`:'';
+  const subLine=subtitle?`<div style="font-size:12px;color:#666;margin-bottom:14px">${escH(subtitle)}</div>`:'';
   return `<div style="margin-bottom:34px">
-    <div style="background:${ac};color:#fff;padding:9px 20px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:18px">${escH(label)}</div>
+    <div style="background:${ac};color:#fff;padding:9px 20px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px">${escH(label)}</div>
+    ${orgLine}${subLine}
     ${buildSectionsHtml(sections,ac,acLight)}
   </div>`;
 }
@@ -686,9 +692,11 @@ function generate(nlNum){
     const orgL1=v('n1_orgLine1'),orgL2=v('n1_orgLine2'),main=v('n1_mainTitle'),iss=v('n1_issueTitle');
     const logoH=state.n1.logoUrl?`<img src="${state.n1.logoUrl}" width="90" style="width:90px;height:auto;margin:0 auto 10px;display:block" alt="לוגו" />`:'';
     const topics=[
-      buildTopicHtml('השקפה',   state.n1.sections.hashkafa,ac2,acL),
-      buildTopicHtml('הלכה',    state.n1.sections.halacha, ac2,acL),
-      buildTopicHtml('רפואה בהלכה',state.n1.sections.refuah,ac2,acL),
+      buildTopicHtml('אקטואליה בפרשה', state.n1.sections.hashkafa, ac2,acL,'','הגיגי השקפה ומחשבה בניחוח אקטואלי לזמננו'),
+      buildTopicHtml('בעין הסערה',     state.n1.sections.beayin,   ac2,acL,'','סוגיות טעונות מחיי היום יום וניתובם עפ"י התורה'),
+      buildTopicHtml('הלכה והנהגה',   state.n1.sections.halacha,  ac2,acL,'מכותלי בית ההוראה',''),
+      buildTopicHtml('רפואה בהלכה',   state.n1.sections.refuah,   ac2,acL,'פנינים ופסקים מבית ההוראה',''),
+      buildTopicHtml('לזכרון עולם 🕯', state.n1.sections.zikaron,  ac2,acL,'דמותם של רבותנו המהווים אור בדרכנו',''),
     ].join('');
     const gal=buildGalleryHtml(state.n1.galleryImages,v('n1_galleryCaption'));
     const vid=buildVideoHtml(v('n1_videoUrl'),v('n1_videoTitle'),ac2);
@@ -710,7 +718,7 @@ function generate(nlNum){
     ${logoH}
     <div style="font-size:11px;color:#aaa;letter-spacing:1px;margin-bottom:7px">${escH(orgL2)}</div>
     <div style="font-family:Georgia,'Times New Roman',serif;font-size:38px;font-weight:900;color:${ac};letter-spacing:3px;line-height:1.05">${escH(main)}</div>
-    <div style="margin-top:11px;display:inline-block;background:${ac};color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;padding:5px 18px">${escH(iss)}</div>
+    <div style="margin-top:8px;font-size:13px;color:#555;letter-spacing:0.5px">${escH(iss)}</div>
   </td></tr>
   <tr><td style="padding:34px 44px 38px;direction:rtl">
     ${topics}${cross}${gal}${donate}${lessons}${ads}${courses}${vid}
@@ -729,10 +737,19 @@ function generate(nlNum){
     const orgL1=v('n2_orgLine1'),orgL2=v('n2_orgLine2'),main=v('n2_mainTitle'),iss=v('n2_issueTitle');
     const logoH=state.n2.logoUrl?`<img src="${state.n2.logoUrl}" width="90" style="width:90px;height:auto;margin:0 auto 10px;display:block" alt="לוגו" />`:'';
     const topics=[
-      buildTopicHtml('חינוך',    state.n2.sections.chinuch,   ac2,acL),
-      buildTopicHtml('שלום בית', state.n2.sections.shalom,    ac2,acL),
-      buildTopicHtml('נפש',      state.n2.sections.nefesh,    ac2,acL),
-      buildTopicHtml('שידוכין',  state.n2.sections.shiduchim, ac2,acL),
+      buildTopicHtml('חינוך',    state.n2.sections.chinuch,   ac2,acL,
+        'מכון הכוונה — חינוך ויעוץ תורני מקצועי',
+        'טיפים ועצות בנושאי חינוך ויעוץ והנחיית הורים'),
+      buildTopicHtml('מחוברים', state.n2.sections.shalom,    ac2,acL,
+        'יעוץ וגישור וליווי פרטני מקצועי — בהנחיית מורנו הרב שליט"א',
+        'טעימות מחיי זוגיות תקינה'),
+      buildTopicHtml('ממעמקים',  state.n2.sections.nefesh,    ac2,acL,
+        'המרכז לבריאות הנפש — בפיקוח מורנו הרב שליט"א',
+        'אוצרות של אימון והעצמה בענייני הנפש'),
+      buildTopicHtml('אושר החיים', state.n2.sections.shiduchim, ac2,acL,
+        'ארגון "בניין לדורות" בניהולה של הרבנית יפה דרעי תחי\' ובהכוונת מורנו הרב שליט"א',
+        'מעיינות של אור בענייני שידוכין'),
+      buildTopicHtml('מתעדכנים', state.n2.sections.meituadkenim, ac2,acL,'',''),
     ].join('');
     const gal=buildGalleryHtml(state.n2.galleryImages,v('n2_galleryCaption'));
     const vid=buildVideoHtml(v('n2_videoUrl'),v('n2_videoTitle'),ac2);
@@ -754,7 +771,8 @@ function generate(nlNum){
     ${logoH}
     <div style="font-size:11px;color:#bbb;letter-spacing:1px;margin-bottom:7px">${escH(orgL2)}</div>
     <div style="font-family:Georgia,'Times New Roman',serif;font-size:32px;font-weight:900;color:${ac};letter-spacing:1px;line-height:1.15">${escH(main)}</div>
-    <div style="margin-top:11px;display:inline-block;background:${ac};color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;padding:5px 18px">${escH(iss)}</div>
+    <div style="margin-top:6px;font-size:13px;color:#888;letter-spacing:0.5px">${escH(iss)}</div>
+    <div style="margin-top:9px;display:inline-block;background:${ac};color:#fff;font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 16px"></div>
   </td></tr>
   <tr><td style="padding:34px 44px 38px;direction:rtl;background:#fffdf5">
     ${topics}${cross}${gal}${donate}${lessons}${ads}${courses}${vid}
@@ -765,7 +783,7 @@ function generate(nlNum){
     ${buildUnsub()}
   </td></tr>
 </table></td></tr></table></body></html>`;
-    currentNLName='חינוך ושלום בית';
+    currentNLName='רוממות — חינוך';
 
   /* ── NL3: קול אחיי — צבעוני ססגוני ── */
   } else if(nlNum===3){
@@ -881,12 +899,15 @@ function download(){
 /* ─── INIT ───────────────────────────────────── */
 (function init(){
   // NL1 seed
-  addSection('n1','hashkafa','השקפה','כותרת ההשקפה','תוכן ההשקפה...');
-  addSection('n1','halacha','הלכה','פסק השבוע','');
-  addSection('n1','refuah','רפואה בהלכה','שאלה ותשובה','');
+  addSection('n1','hashkafa','אקטואליה בפרשה','כותרת המאמר','');
+  addSection('n1','beayin','בעין הסערה','כותרת הסוגיה','');
+  addSection('n1','halacha','הלכה והנהגה','כותרת השאלה','');
+  addSection('n1','refuah','רפואה בהלכה','','');
   // NL2 seed
   addSection('n2','chinuch','חינוך','','');
-  addSection('n2','shalom','שלום בית','','');
+  addSection('n2','shalom','מחוברים','','');
+  addSection('n2','nefesh','ממעמקים','','');
+  addSection('n2','shiduchim','אושר החיים','','');
   // NL3 seed
   addSection('n3','dvar','דבר תורה','','');
 })();
